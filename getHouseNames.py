@@ -28,7 +28,8 @@ opt.binary_location = brave_path
 driver = webdriver.Chrome(options=opt)
 driver.get(webpage) # Seabrook stores the search
                     # results in a div class="result-list"
-resultlist = driver.find_element_by_class_name('result-list')
-# print(resultlist.get_attribute('innerHTML')) # HINT
-entries = resultlist.find_element_by_xpath('/html/body/div[3]/div[2]/div/main/div[2]/vrweb-search/riot-solr-container[2]/riot-solr-result-list/div/subtag[1]/div/div[2]/h4/a')
-print(entries.get_attribute('innerHTML'))
+                    # The actual links to items can be found
+                    # associated with their images, in <a class="itemlink" ...>
+resultlinks = driver.find_element_by_class_name('itemlink')
+entries = resultlist.find_element_by_xpath('/html/body/div[3]/div[2]/div/main/div[2]/vrweb-search/riot-solr-container[2]/riot-solr-result-list/div/subtag[1]/div/div[1]/div/div/div[1]/div/a')
+print(resultlinks.get_attribute('href'))
