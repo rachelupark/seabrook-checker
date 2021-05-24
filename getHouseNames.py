@@ -1,4 +1,4 @@
-# Last edited on 19 May 2021
+# Last edited on 24 May 2021
 # by Rachel U. Park
 
 """
@@ -9,6 +9,8 @@ a List[] of available house names.
 """
 
 from selenium import webdriver
+import time
+from scrollDown import scroll_down
 
 
 # Option Set Up
@@ -26,10 +28,16 @@ opt = webdriver.ChromeOptions()
 opt.binary_location = brave_path
 
 driver = webdriver.Chrome(options=opt)
+driver.maximize_window()
 driver.get(webpage) # Seabrook stores the search
                     # results in a div class="result-list"
                     # The actual links to items can be found
                     # associated with their images, in <a class="itemlink" ...>
-resultlinks = driver.find_element_by_class_name('itemlink')
-entries = resultlist.find_element_by_xpath('/html/body/div[3]/div[2]/div/main/div[2]/vrweb-search/riot-solr-container[2]/riot-solr-result-list/div/subtag[1]/div/div[1]/div/div/div[1]/div/a')
-print(resultlinks.get_attribute('href'))
+
+scroll_down(driver)
+
+resultlinks1 = driver.find_elements_by_class_name('itemlink')
+for link in resultlinks1:
+    print(link.get_attribute('href'))
+
+
