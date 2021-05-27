@@ -1,5 +1,5 @@
-# Last edited on 24 May 2021
-# by Rachel U. Park
+## Last edited on 24 May 2021
+## by Rachel U. Park
 
 """
 Status: in progress
@@ -9,15 +9,18 @@ a List[] of available house names.
 """
 
 from selenium import webdriver
+
 import time
-from scrollDown import scroll_down
+
+from navtools import scroll_down
+from navtools import get_calendars
 
 
-# Option Set Up
-# To Do: Set up a better systems for these options upon program start
-# Maybe flags? Input options? Or a GUI?
+## Option Set Up
+## To Do: Set up a better systems for these options upon program start
+## Maybe flags? Input options? Or a GUI?
 
-# Set this webpage to whatever filter selections you want on Seabrook's homepage.
+## Set this webpage to whatever filter selections you want on Seabrook's homepage.
 webpage = 'https://www.seabrookwa.com/hot-tub#fq=%7B!tag%3DRiotSolrWidget%2CRiotSolrFacetList' \
           '-sm_field_vr_featured_amenities%24name%7Dsm_field_vr_featured_amenities%24name%3A%22Dog%20Friendly%22&q' \
           '=im_field_vr_featured_amenities%24tid%3A71 '
@@ -33,11 +36,18 @@ driver.get(webpage) # Seabrook stores the search
                     # results in a div class="result-list"
                     # The actual links to items can be found
                     # associated with their images, in <a class="itemlink" ...>
-
 scroll_down(driver)
 
-resultlinks1 = driver.find_elements_by_class_name('itemlink')
-for link in resultlinks1:
-    print(link.get_attribute('href'))
+resultelements = driver.find_elements_by_class_name('itemlink')
+childlinks = []
 
+# populate childlinks with links to houses
+for resultlink in resultelements:
+    childlinks.append(resultlink.get_attribute('href'))
 
+# go through each link
+for childlink in childlinks:
+    driver.get(childlink)
+    print(driver.title)
+
+driver.quit()

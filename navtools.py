@@ -15,6 +15,7 @@ import time
 
 SCROLL_PAUSE_TIME = 2.0 # number of seconds to pause before scrolling further
 
+# scolls up and down the page to trigger loading of content
 def scroll_down(driver):
     # Get scroll height
     last_height = driver.execute_script("return document.body.scrollHeight")
@@ -37,6 +38,7 @@ def scroll_down(driver):
         if new_height == last_height:
             break
         last_height = new_height
+
 
 
 
