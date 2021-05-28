@@ -13,7 +13,7 @@ from selenium import webdriver
 import time
 
 from navtools import scroll_down
-from navtools import get_calendars
+# from navtools import get_calendars
 
 
 ## Option Set Up
