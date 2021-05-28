@@ -1,4 +1,4 @@
-## Last edited on 24 May 2021
+## Last edited on 27 May 2021
 ## by Rachel U. Park
 
 """
@@ -9,7 +9,6 @@ a List[] of available house names.
 """
 
 from selenium import webdriver
-
 import time
 
 from navtools import scroll_down
@@ -39,8 +38,8 @@ driver.get(webpage) # Seabrook stores the search
 scroll_down(driver)
 
 resultelements = driver.find_elements_by_class_name('itemlink')
-childlinks = []
 
+childlinks = []
 # populate childlinks with links to houses
 for resultlink in resultelements:
     childlinks.append(resultlink.get_attribute('href'))
@@ -48,6 +47,6 @@ for resultlink in resultelements:
 # go through each link
 for childlink in childlinks:
     driver.get(childlink)
-    print(driver.title)
+    print(driver.title) # HINT
 
 driver.quit()

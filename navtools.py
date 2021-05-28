@@ -39,7 +39,10 @@ def scroll_down(driver):
             break
         last_height = new_height
 
-
+# swipes through a calendar widget on a rental info page to load
+# all available dates
+def cal_swipe(driver):
+    # TO BE IMPLEMENTED
 
 
 
