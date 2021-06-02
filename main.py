@@ -44,9 +44,31 @@ childlinks = []
 for resultlink in resultelements:
     childlinks.append(resultlink.get_attribute('href'))
 
-# go through each link
+# Create dictionaries for whichever time lengths you want.
+housepricedict = {} # Update this with a proper name.
+houselinkdict = {} # Update this with a proper name.
+
+# get info from each link and create a dictionary of available houses
+# and prices
 for childlink in childlinks:
     driver.get(childlink)
     print(driver.title) # HINT
+
+    '''
+    PSEUDO CODE
+    price = get_price(check in, checkout)
+    housename = driver.title
+    housepricedict.update({housename, price})
+    houselinkdict.update({housename, houselink})
+    
+    # Ask what price you are okay with
+    selectedhouselinks = []
+    for x in housepricedict:
+        if housepricedict(x) < maxprice:
+            selectedhouselinks.append(x)
+    
+    for j in selectedhouselinks:
+        print(j)
+    '''
 
 driver.quit()
