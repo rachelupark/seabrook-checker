@@ -8,10 +8,12 @@ Goal: given a url of Seabrook search criteria, returns
 a List[] of available house names.
 """
 
+
 from selenium import webdriver
 import time
 
 from navtools import scroll_down
+from caltools import get_av
 # from navtools import get_calendars
 
 
@@ -31,12 +33,16 @@ opt.binary_location = brave_path
 
 driver = webdriver.Chrome(options=opt)
 driver.maximize_window()
-driver.get(webpage) # Seabrook stores the search
+# driver.get(webpage) # Seabrook stores the search
                     # results in a div class="result-list"
                     # The actual links to items can be found
                     # associated with their images, in <a class="itemlink" ...>
 scroll_down(driver)
 
+driver.get("https://www.seabrookwa.com/vacation-rentals/land-end")
+get_av("06/12/21", driver)
+
+''' Leaving this out so I can test faster
 resultelements = driver.find_elements_by_class_name('itemlink')
 
 childlinks = []
@@ -44,31 +50,13 @@ childlinks = []
 for resultlink in resultelements:
     childlinks.append(resultlink.get_attribute('href'))
 
-# Create dictionaries for whichever time lengths you want.
-housepricedict = {} # Update this with a proper name.
-houselinkdict = {} # Update this with a proper name.
-
 # get info from each link and create a dictionary of available houses
 # and prices
 for childlink in childlinks:
     driver.get(childlink)
     print(driver.title) # HINT
 
-    '''
-    PSEUDO CODE
-    price = get_price(check in, checkout)
-    housename = driver.title
-    housepricedict.update({housename, price})
-    houselinkdict.update({housename, houselink})
-    
-    # Ask what price you are okay with
-    selectedhouselinks = []
-    for x in housepricedict:
-        if housepricedict(x) < maxprice:
-            selectedhouselinks.append(x)
-    
-    for j in selectedhouselinks:
-        print(j)
-    '''
 
+
+'''
 driver.quit()
