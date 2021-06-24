@@ -59,8 +59,6 @@ for house in qualifiedhouses:
         print("Congrats! " + driver.current_url + " is available for check-in on " + date + "!")
     else:
         print("Sorry, " + housename + " is booked.")
-
-
-
+print "That's all she wrote, folks."
 
 driver.quit()
