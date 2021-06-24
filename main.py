@@ -1,4 +1,4 @@
-## Last edited on 24 May 2021
+## Last edited on 27 May 2021
 ## by Rachel U. Park
 
 """
@@ -8,12 +8,13 @@ Goal: given a url of Seabrook search criteria, returns
 a List[] of available house names.
 """
 
-from selenium import webdriver
 
+from selenium import webdriver
 import time
 
 from navtools import scroll_down
-from navtools import get_calendars
+from caltools import get_av
+# from navtools import get_calendars
 
 
 ## Option Set Up
@@ -21,9 +22,8 @@ from navtools import get_calendars
 ## Maybe flags? Input options? Or a GUI?
 
 ## Set this webpage to whatever filter selections you want on Seabrook's homepage.
-webpage = 'https://www.seabrookwa.com/hot-tub#fq=%7B!tag%3DRiotSolrWidget%2CRiotSolrFacetList' \
-          '-sm_field_vr_featured_amenities%24name%7Dsm_field_vr_featured_amenities%24name%3A%22Dog%20Friendly%22&q' \
-          '=im_field_vr_featured_amenities%24tid%3A71 '
+webpage = 'https://www.seabrookwa.com/ocean-view#q=im_field_vr_featured_amenities%24tid%3A66'
+date = "07/09/21"
 
 
 brave_path = '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser'
@@ -31,23 +31,34 @@ opt = webdriver.ChromeOptions()
 opt.binary_location = brave_path
 
 driver = webdriver.Chrome(options=opt)
+driver.get(webpage)
 driver.maximize_window()
-driver.get(webpage) # Seabrook stores the search
-                    # results in a div class="result-list"
-                    # The actual links to items can be found
-                    # associated with their images, in <a class="itemlink" ...>
 scroll_down(driver)
 
-resultelements = driver.find_elements_by_class_name('itemlink')
-childlinks = []
+def get_name_from_url(urldriver):
+    url = urldriver.current_url
+    name = url.split("/")[-1]
+    name = " ".join(name.split("-"))
+    return name
 
-# populate childlinks with links to houses
-for resultlink in resultelements:
-    childlinks.append(resultlink.get_attribute('href'))
+def get_search_results(searchdriver):
+    resultelements = searchdriver.find_elements_by_class_name('itemlink')
+    childlinks = []
 
-# go through each link
-for childlink in childlinks:
-    driver.get(childlink)
-    print(driver.title)
+    # Populate childlinks with links to houses from search result.
+    for resultlink in resultelements:
+        childlinks.append(resultlink.get_attribute('href'))
+    return childlinks
+
+qualifiedhouses = get_search_results(driver)
+for house in qualifiedhouses:
+    driver.get(house)
+    isavailable = get_av(date, driver)
+    housename = get_name_from_url(driver)
+    if isavailable:
+        print("Congrats! " + driver.current_url + " is available for check-in on " + date + "!")
+    else:
+        print("Sorry, " + housename + " is booked.")
+print "That's all she wrote, folks."
 
 driver.quit()

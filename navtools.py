@@ -47,4 +47,3 @@ def scroll_down(driver):
 
 
 
-
