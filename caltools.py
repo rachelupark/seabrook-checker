@@ -1,4 +1,4 @@
-## Last edited 27 May 2021
+## Last edited 24 June 2021
 ## by Rachel U. Park
 
 # Contains tools for interacting with the Seabrook calendar on
@@ -8,14 +8,13 @@ from selenium import webdriver
 import time
 from navtools import scroll_down
 
-# takes a date in mm/dd/yy format and a driver for a single house's info
+# takes a date in mm/dd format and a driver for a single house's info
 def get_av(date: str, driver):
     # gets the overnight price of a given date
     # print("Here's the date you gave me: " + date) #hint
     scroll_down(driver)
     mm = date.split("/")[0]
     dd = date.split("/")[1]
-    yy = date.split("/")[2]
 
     monthdrivers = driver.find_elements_by_class_name('rcav-month')
     chosenmonthdriver = driver
