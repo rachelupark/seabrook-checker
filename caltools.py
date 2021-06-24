@@ -20,9 +20,13 @@ def get_av(date: str, driver):
         return False
 
 def get_price(date: str, driver):
-    # return the price of that night as an int
-    return
-
+    monthele = find_month_elements(date, driver)
+    dd = date.split("/")[1]
+    dayele = monthele.find_elements_by_class_name('day')[int(dd)-1]
+    dayele = dayele.find_element_by_class_name('rc-price')
+    price = dayele.get_attribute('innerHTML')
+    price = "".join(price[1:].split(","))
+    return int(price)
 
 ######################################################################
 ## These methods are only for caltools. Please don't import them.
@@ -45,12 +49,6 @@ def get_status_day(date: str, driver):
     dayele = monthele.find_elements_by_class_name('day')[int(dd)-1]
     status = dayele.get_attribute('class')
     return status
-
-def get_price_day(dd: str, monthele):
-    dayele = monthele.find_elements_by_class_name('rc-price')[int(dd)-1]
-    price = dayele.get_attribute('innerHTML')
-    price = "".join(price[1:].split(","))
-    return int(price)
 
 # Accepts elements object of a specific month.
 def get_mm(monthdriver):

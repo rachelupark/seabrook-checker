@@ -14,7 +14,7 @@ import time
 import string
 
 from navtools import scroll_down
-from caltools import get_av
+from caltools import get_av, get_price
 
 ## Option Set Up
 ## To Do: Set up a better systems for these options upon program start
@@ -23,9 +23,9 @@ from caltools import get_av
 ### USER OPTIONS
 # Set this webpage to whatever filter selections you want on Seabrook's homepage.
 
-webpage = 'https://www.seabrookwa.com/ocean-view#q=im_field_vr_featured_amenities%24tid%3A66'
+webpage = 'https://www.seabrookwa.com/pets-allowed#fq=%7B!tag%3DRCRiotAvailFilter%2CRiotSolrWidget%2CRCRiotPrices%7Ditem_id%3A(1066%20OR%20957)&q=im_field_vr_featured_amenities%24tid%3A10&rcav=%7B%22rcav%22%3A%7B%22begin%22%3A%2207%2F08%2F2021%22%2C%22end%22%3A%2207%2F13%2F2021%22%2C%22adult%22%3A1%2C%22child%22%3A0%7D%7D'
 # Set this to the date you want checked in mm/dd format.
-date = "07/09/21"
+date = "07/08/21"
 
 #Set this path to your browser binary.
 brave_path = '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser'
@@ -58,7 +58,7 @@ def get_search_results(searchdriver):
 
 ## Here's the program
 
-qualifiedhouses = get_search_results(driver)[:3] #hint smaller subset for testing
+qualifiedhouses = get_search_results(driver) #hint smaller subset for testing
 
 for house in qualifiedhouses:
     driver.get(house)
@@ -66,6 +66,7 @@ for house in qualifiedhouses:
     housename = get_name_from_url(driver)
     if isavailable:
         print("Congrats! " + driver.current_url + " is available for check-in on " + date + "!")
+        print(get_price(date, driver))
     else:
         print("Sorry, " + housename + " is booked.")
 print("That's all she wrote, folks.")
