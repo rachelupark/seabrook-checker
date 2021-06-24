@@ -40,7 +40,11 @@ driver.maximize_window()
 scroll_down(driver)
 
 driver.get("https://www.seabrookwa.com/vacation-rentals/land-end")
-get_av("06/12/21", driver)
+isavailable = get_av("06/12/21", driver)
+if isavailable:
+    print("Congrats! That date is open for check-in.")
+else:
+    print("Sorry, that date is not open for check-in.")
 
 ''' Leaving this out so I can test faster
 resultelements = driver.find_elements_by_class_name('itemlink')

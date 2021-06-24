@@ -10,9 +10,11 @@ from navtools import scroll_down
 
 def get_av(date: str, driver):
     # gets the overnight price of a given date
-    print("Here's the given date you gave me: " + date) # HINT
+    print("Here's the date you gave me: " + date) # HINT
     scroll_down(driver)
     mm = date.split("/")[0]
+    dd = date.split("/")[1]
+    yy = date.split("/")[2]
 
     monthdrivers = driver.find_elements_by_class_name('rcav-month')
     chosenmonthdriver = driver
@@ -22,6 +24,21 @@ def get_av(date: str, driver):
             break
     print("Here is the month of the driver I matched to your request:")
     print(get_mm(chosenmonthdriver))
+    print("Here's the day I heard: " + dd)
+    print("Here's the availability of the day you selected: ")
+    availability = get_av_day(dd, chosenmonthdriver)
+    print(availability)
+    if availability == "day av-0" or availability == "day av-0 av-IN":
+        return True
+    else:
+        return False
+
+# Accepts a day and an elements object of a specific month.
+def get_av_day(dd: str, monthele):
+    dayele = monthele.find_elements_by_class_name('day')[int(dd)-1]
+    status = dayele.get_attribute('class')
+    return status
+
 
 def get_mm(monthdriver):
     monthnamedriver = monthdriver.find_element_by_class_name("rcjs-page-caption")
