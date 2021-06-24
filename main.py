@@ -22,9 +22,8 @@ from caltools import get_av
 ## Maybe flags? Input options? Or a GUI?
 
 ## Set this webpage to whatever filter selections you want on Seabrook's homepage.
-webpage = 'https://www.seabrookwa.com/hot-tub#fq=%7B!tag%3DRiotSolrWidget%2CRiotSolrFacetList' \
-          '-sm_field_vr_featured_amenities%24name%7Dsm_field_vr_featured_amenities%24name%3A%22Dog%20Friendly%22&q' \
-          '=im_field_vr_featured_amenities%24tid%3A71 '
+webpage = 'https://www.seabrookwa.com/ocean-view#q=im_field_vr_featured_amenities%24tid%3A66'
+date = "07/09/21"
 
 
 brave_path = '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser'
@@ -32,22 +31,18 @@ opt = webdriver.ChromeOptions()
 opt.binary_location = brave_path
 
 driver = webdriver.Chrome(options=opt)
+driver.get(webpage)
 driver.maximize_window()
-# driver.get(webpage) # Seabrook stores the search
-                    # results in a div class="result-list"
-                    # The actual links to items can be found
-                    # associated with their images, in <a class="itemlink" ...>
 scroll_down(driver)
 
-driver.get("https://www.seabrookwa.com/vacation-rentals/land-end")
-isavailable = get_av("07/08/21", driver)
-if isavailable:
-    print("Congrats! That date is open for check-in.")
-else:
-    print("Sorry, that date is not open for check-in.")
+def get_name_from_url(urldriver):
+    url = urldriver.current_url
+    name = url.split("/")[-1]
+    name = " ".join(name.split("-"))
+    return name
 
-def get_search_results(searchurl: str):
-    resultelements = driver.find_elements_by_class_name('itemlink')
+def get_search_results(searchdriver):
+    resultelements = searchdriver.find_elements_by_class_name('itemlink')
     childlinks = []
 
     # Populate childlinks with links to houses from search result.
@@ -55,11 +50,16 @@ def get_search_results(searchurl: str):
         childlinks.append(resultlink.get_attribute('href'))
     return childlinks
 
-    # # get info from each link and create a dictionary of available houses
-    # # and prices
-    # for childlink in childlinks: #hint
-    #     driver.get(childlink) #hint
-    #     print(driver.title) #hint
+qualifiedhouses = get_search_results(driver)
+for house in qualifiedhouses:
+    driver.get(house)
+    isavailable = get_av(date, driver)
+    housename = get_name_from_url(driver)
+    if isavailable:
+        print("Congrats! " + driver.current_url + " is available for check-in on " + date + "!")
+    else:
+        print("Sorry, " + housename + " is booked.")
+
 
 
 
