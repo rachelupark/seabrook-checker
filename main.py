@@ -46,21 +46,21 @@ if isavailable:
 else:
     print("Sorry, that date is not open for check-in.")
 
-''' Leaving this out so I can test faster
-resultelements = driver.find_elements_by_class_name('itemlink')
+def get_search_results(searchurl: str):
+    resultelements = driver.find_elements_by_class_name('itemlink')
+    childlinks = []
 
-childlinks = []
-# populate childlinks with links to houses
-for resultlink in resultelements:
-    childlinks.append(resultlink.get_attribute('href'))
+    # Populate childlinks with links to houses from search result.
+    for resultlink in resultelements:
+        childlinks.append(resultlink.get_attribute('href'))
+    return childlinks
 
-# get info from each link and create a dictionary of available houses
-# and prices
-for childlink in childlinks:
-    driver.get(childlink)
-    print(driver.title) # HINT
+    # # get info from each link and create a dictionary of available houses
+    # # and prices
+    # for childlink in childlinks: #hint
+    #     driver.get(childlink) #hint
+    #     print(driver.title) #hint
 
 
 
-'''
 driver.quit()
