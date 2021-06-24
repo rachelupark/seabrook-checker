@@ -11,6 +11,7 @@ a List[] of available house names.
 
 from selenium import webdriver
 import time
+import string
 
 from navtools import scroll_down
 from caltools import get_av
@@ -44,7 +45,7 @@ def get_name_from_url(urldriver):
     url = urldriver.current_url
     name = url.split("/")[-1]
     name = " ".join(name.split("-"))
-    return name
+    return string.capwords(name);
 
 def get_search_results(searchdriver):
     resultelements = searchdriver.find_elements_by_class_name('itemlink')
