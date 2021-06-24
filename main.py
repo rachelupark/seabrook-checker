@@ -45,7 +45,7 @@ def get_name_from_url(urldriver):
     url = urldriver.current_url
     name = url.split("/")[-1]
     name = " ".join(name.split("-"))
-    return string.capwords(name);
+    return string.capwords(name)
 
 def get_search_results(searchdriver):
     resultelements = searchdriver.find_elements_by_class_name('itemlink')

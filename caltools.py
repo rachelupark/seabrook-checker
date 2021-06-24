@@ -12,19 +12,9 @@ from navtools import scroll_down
 # returns whether the house is available on that day
 def get_av(date: str, driver):
     scroll_down(driver)
-    mm = date.split("/")[0]
-    dd = date.split("/")[1]
 
-    monthdrivers = driver.find_elements_by_class_name('rcav-month')
-    chosenmonthdriver = driver
-    for x in monthdrivers:
-        if get_mm(x) == mm:
-            chosenmonthdriver = x
-            break
-
-    availability = get_av_day(dd, chosenmonthdriver)
-
-    if availability == "day av-O" or availability == "day av-O av-IN":
+    status = get_status_day(date, driver)
+    if status == "day av-O" or status == "day av-O av-IN":
         return True
     else:
         return False
@@ -37,13 +27,21 @@ def get_price(date: str, driver):
 ######################################################################
 ## These methods are only for caltools. Please don't import them.
 
-def find_month(date, driver):
-    # return web elements corresponding to the selected month.
-    return
-
+def find_month_elements(date, driver):
+    scroll_down(driver)
+    mm = date.split("/")[0]
+    monthdriver = driver # declare element outside loop
+    monthdrivers = driver.find_elements_by_class_name('rcav-month')
+    for x in monthdrivers:
+        if get_mm(x) == mm:
+            monthdriver = x
+            break
+    return monthdriver
 
 # Accepts a day and an elements object of a specific month.
-def get_av_day(dd: str, monthele):
+def get_status_day(date: str, driver):
+    monthele = find_month_elements(date, driver)
+    dd = date.split("/")[1]
     dayele = monthele.find_elements_by_class_name('day')[int(dd)-1]
     status = dayele.get_attribute('class')
     return status
