@@ -10,7 +10,7 @@ from navtools import scroll_down
 
 def get_av(date: str, driver):
     # gets the overnight price of a given date
-    print("Here's the date you gave me: " + date) # HINT
+    print("Here's the date you gave me: " + date) #hint
     scroll_down(driver)
     mm = date.split("/")[0]
     dd = date.split("/")[1]
@@ -22,13 +22,13 @@ def get_av(date: str, driver):
         if get_mm(x) == mm:
             chosenmonthdriver = x
             break
-    print("Here is the month of the driver I matched to your request:")
-    print(get_mm(chosenmonthdriver))
-    print("Here's the day I heard: " + dd)
-    print("Here's the availability of the day you selected: ")
+    print("Here is the month of the driver I matched to your request:") #hint
+    print(get_mm(chosenmonthdriver)) #hint
+    print("Here's the day I heard: " + dd) #hint
+    print("Here's the availability of the day you selected: ") #hint
     availability = get_av_day(dd, chosenmonthdriver)
-    print(availability)
-    if availability == "day av-0" or availability == "day av-0 av-IN":
+    print(availability) #hint
+    if availability == "day av-O" or availability == "day av-O av-IN":
         return True
     else:
         return False

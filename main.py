@@ -40,7 +40,7 @@ driver.maximize_window()
 scroll_down(driver)
 
 driver.get("https://www.seabrookwa.com/vacation-rentals/land-end")
-isavailable = get_av("06/12/21", driver)
+isavailable = get_av("07/08/21", driver)
 if isavailable:
     print("Congrats! That date is open for check-in.")
 else:
