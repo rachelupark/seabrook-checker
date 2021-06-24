@@ -8,9 +8,10 @@ from selenium import webdriver
 import time
 from navtools import scroll_down
 
+# takes a date in mm/dd/yy format and a driver for a single house's info
 def get_av(date: str, driver):
     # gets the overnight price of a given date
-    print("Here's the date you gave me: " + date) #hint
+    # print("Here's the date you gave me: " + date) #hint
     scroll_down(driver)
     mm = date.split("/")[0]
     dd = date.split("/")[1]
@@ -22,12 +23,12 @@ def get_av(date: str, driver):
         if get_mm(x) == mm:
             chosenmonthdriver = x
             break
-    print("Here is the month of the driver I matched to your request:") #hint
-    print(get_mm(chosenmonthdriver)) #hint
-    print("Here's the day I heard: " + dd) #hint
-    print("Here's the availability of the day you selected: ") #hint
+    # print("Here is the month of the driver I matched to your request:") #hint
+    # print(get_mm(chosenmonthdriver)) #hint
+    # print("Here's the day I heard: " + dd) #hint
+    # print("Here's the availability of the day you selected: ") #hint
     availability = get_av_day(dd, chosenmonthdriver)
-    print(availability) #hint
+    # print(availability) #hint
     if availability == "day av-O" or availability == "day av-O av-IN":
         return True
     else:
@@ -39,7 +40,7 @@ def get_av_day(dd: str, monthele):
     status = dayele.get_attribute('class')
     return status
 
-
+# Accepts elements object of a specific month.
 def get_mm(monthdriver):
     monthnamedriver = monthdriver.find_element_by_class_name("rcjs-page-caption")
     monthyeararr = monthnamedriver.get_attribute('innerHTML')
