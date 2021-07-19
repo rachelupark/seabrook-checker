@@ -7,6 +7,7 @@
 from selenium import webdriver
 import time
 from navtools import scroll_down
+import string
 
 # accepts a date in mm/dd format and a driver for a single house's info
 # returns whether the house is available on that day
@@ -28,8 +29,23 @@ def get_price(date: str, driver):
     price = "".join(price[1:].split(","))
     return int(price)
 
+def get_name_from_url(urldriver):
+    url = urldriver.current_url
+    name = url.split("/")[-1]
+    name = " ".join(name.split("-"))
+    return string.capwords(name)
+
+def get_search_results(searchdriver):
+    resultelements = searchdriver.find_elements_by_class_name('itemlink')
+    childlinks = []
+
+    # Populate childlinks with links to houses from search result.
+    for resultlink in resultelements:
+        childlinks.append(resultlink.get_attribute('href'))
+    return childlinks
+
 ######################################################################
-## These methods are only for caltools. Please don't import them.
+## These methods are only for caltools. Please don't import them. ###
 
 def find_month_elements(date, driver):
     scroll_down(driver)
