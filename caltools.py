@@ -1,25 +1,29 @@
-## Last edited 24 June 2021
+## Last edited 20 July 2021
 ## by Rachel U. Park
 
-# Contains tools for interacting with the Seabrook calendar on
-# specific house sites.
+"""
+Contains tools specifically designed for interacting with the Seabrook website.
+"""
 
-from selenium import webdriver
+
 import time
-from navtools import scroll_down
 import string
+from selenium import webdriver
+from navtools import scroll_down
 
-# accepts a date in mm/dd format and a driver for a single house's info
-# returns whether the house is available on that day
+# Accepts a date in mm/dd format and a driver for a single house's info
+# Returns whether the house is available on that day
 def get_av(date: str, driver):
     scroll_down(driver)
-
     status = get_status_day(date, driver)
+    # Is day available for checkin and out "av-0" and/or checkin only "av-IN"?
     if status == "day av-O" or status == "day av-O av-IN":
         return True
     else:
         return False
 
+# Accepts a date and web driver for a specific house
+# Returns overnight price of date for house
 def get_price(date: str, driver):
     monthele = find_month_elements(date, driver)
     dd = date.split("/")[1]
@@ -29,12 +33,16 @@ def get_price(date: str, driver):
     price = "".join(price[1:].split(","))
     return int(price)
 
+# Accepts web driver for specific house
+# Returns the name of the house
 def get_name_from_url(urldriver):
     url = urldriver.current_url
     name = url.split("/")[-1]
     name = " ".join(name.split("-"))
     return string.capwords(name)
 
+# Accepts web driver for search result of houses
+# Returns array of urls for specific houses
 def get_search_results(searchdriver):
     resultelements = searchdriver.find_elements_by_class_name('itemlink')
     childlinks = []

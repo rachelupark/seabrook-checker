@@ -1,9 +1,8 @@
-# Last edited 24 May 2021
+# Last edited 20 July 2021
 # by Rachel U. Park
 
 """
-Scrolls down to bottom of webpage so all house
-options load!
+Scrolls down to bottom of a webpage so all available content loads.
 
 Got this solution from
 https://stackoverflow.com/questions/20986631/how-can-i-scroll-a-web-page-using-selenium-webdriver-in-python
