@@ -12,6 +12,3 @@ Seabrook Availability Tool prints the availability of houses directly to the com
 
 ## Compatibility
 Seabrook Availability Tool only works with chromium browsers.
-
-
-
